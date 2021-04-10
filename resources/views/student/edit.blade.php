@@ -50,12 +50,12 @@
                                 <input type="Major" name="Major" class="form-control" id="Major" value="{{ $Student->major }}" aria-describedby="Major" >
                             </div>
                             <div class="form-group">
-                                <label for="birth_date">Birth Date</label>
-                                <input type="birth_date" name="birth_date" class="form-control" id="birth_date" value="{{ $Student->birth_date }}" aria-describedby="birth_date" >
+                                <label for="DateOfBirth">Birth Date</label>
+                                <input type="DateOfBirth" name="DateOfBirth" class="form-control" id="DateOfBirth" value="{{ $Student->DateOfBirth }}" aria-describedby="DateOfBirth" >
                             </div>
                             <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="address" name="address" class="form-control" id="address" value="{{ $Student->address }}" aria-describedby="address" >
+                                <label for="Address">Address</label>
+                                <input type="Address" name="Address" class="form-control" id="Address" value="{{ $Student->Address }}" aria-describedby="Address" >
                             </div>
                             
                             <button type="submit" class="btn btn-primary">Submit</button>
