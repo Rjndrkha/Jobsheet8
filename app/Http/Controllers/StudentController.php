@@ -79,10 +79,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($Nim)
+    public function show($nim)
     {
-        $Student = Student::with('class')->where('nim',$nim)->first();
-        return view('student.detail', ['Student'=>$student]);
+        $Student = Student::with('class')->where('Nim', $nim)->first();
+        return view('student.detail', ['Student' => $Student]);
     }
 
     /**
@@ -91,13 +91,11 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($Nim)
+    public function edit($nim)
     {
-        $Student = student::with('class')->where('nim',$nim)->first();
+        $Student = student::with('class')->where('nim', $nim)->first();
         $class = ClassModel::all();
-        return view('student.edit', compact('Student','class'));
-
-        
+        return view('student.edit', compact('Student', 'class'));
     }
 
     /**
@@ -108,34 +106,35 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $Nim)
-    
-    $request->validate([
-        'Nim' => 'required',
-        'Name' => 'required',
-        'class' => 'required',
-        'Major' => 'required',
-        'Address' => 'required',
-        'DateOfBirth' => 'required',
-    ]);
+    {
 
-    $student = new Student;
-    $student->nim = $request->get('Nim');
-    $student->name = $request->get('Name');
-    $student->major = $request->get('Major');
-    $student->Address = $request->get('Address');
-    $student->DateOfBirth = $request->get('DateOfBirth');
+        $request->validate([
+            'Nim' => 'required',
+            'Name' => 'required',
+            'class' => 'required',
+            'Major' => 'required',
+            'Address' => 'required',
+            'DateOfBirth' => 'required',
+        ]);
 
-
-    $class = new ClassModel;
-    $class->id = $request->get('class');
-
-    $student->class()->associate($class);
-    $student->save();
+        $student = new Student;
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
+        $student->Address = $request->get('Address');
+        $student->DateOfBirth = $request->get('DateOfBirth');
 
 
-    return redirect()->route('student.index')
-        ->with('success', 'Student Berhasil Ditambahkan');
-}
+        $class = new ClassModel;
+        $class->id = $request->get('class');
+
+        $student->class()->associate($class);
+        $student->save();
+
+
+        return redirect()->route('student.index')
+            ->with('success', 'Student Berhasil Ditambahkan');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -149,21 +148,22 @@ class StudentController extends Controller
         return redirect()->route('student.index')
             ->with('success', 'Student Successfully Deleted');
     }
-};
-public function search(Request $request) {
 
-    $student = Student::when($request->keyword, function ($query) use ($request){
-    
-    $query->where( 'name', 'like', "%{$request->keyword}%")
-    
-            ->orWhere('nim', 'like', "%{$request->keyword}%") 
-            
-            ->orWhere('class', 'like', "%{$request->keyword}%")
-    
-             ->orWhere('major', 'like', "%{$request->keyword}%");
-                })->paginate(5);
-    
-    $student->appends($request->only('keyword')); 
-    return view('student.index', compact( 'student'));
-}
+    public function search(Request $request)
+    {
+
+        $student = Student::when($request->keyword, function ($query) use ($request) {
+
+            $query->where('name', 'like', "%{$request->keyword}%")
+
+                ->orWhere('nim', 'like', "%{$request->keyword}%")
+
+                ->orWhere('class', 'like', "%{$request->keyword}%")
+
+                ->orWhere('major', 'like', "%{$request->keyword}%");
+        })->paginate(5);
+
+        $student->appends($request->only('keyword'));
+        return view('student.index', compact('student'));
+    }
 }
