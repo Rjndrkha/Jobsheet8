@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+//use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Facades\DB;
 use App\Models\ClassModel;
 
 class StudentController extends Controller
