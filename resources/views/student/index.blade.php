@@ -57,10 +57,6 @@
     @endforeach
 
 </table>
-<div class="row">
-    <div class="col-12 text-center">
-        {{ $student->links() }}
-    </div>
-</div>
+
 
     @endsection
