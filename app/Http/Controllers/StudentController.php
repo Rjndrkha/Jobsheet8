@@ -18,8 +18,8 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $student = Student::with('class')->get();
-        $paginate = Student::orderBy('id_student','asc')->paginate(3);
-        return view('student.index',['student'=>$student,'paginate'=>$paginate]);
+        $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+        return view('student.index', ['student' => $student, 'paginate' => $paginate]);
     }
 
     /**
@@ -30,7 +30,7 @@ class StudentController extends Controller
     public function create()
     {
         $class = ClassModel::all();
-        return view('student.create',['class'=> $class]);
+        return view('student.create', ['class' => $class]);
     }
 
     /**
@@ -41,20 +41,37 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        //TODO : Implementasikan Proses Simpan Ke Database
+        // return "Proses Simpan ke database";
+
         $request->validate([
             'Nim' => 'required',
             'Name' => 'required',
-            'Class' => 'required',
+            'class' => 'required',
             'Major' => 'required',
             'Address' => 'required',
             'DateOfBirth' => 'required',
-            ]);
+        ]);
 
-            Student::create($request->all());
+        $student = new Student;
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
+        $student->Address = $request->get('Address');
+        $student->DateOfBirth = $request->get('DateOfBirth');
 
-            return redirect()->route('student.index')
-                ->with('success', 'Student Successfully Added');
+
+        $class = new ClassModel;
+        $class->id = $request->get('class');
+
+        $student->class()->associate($class);
+        $student->save();
+
+
+        return redirect()->route('student.index')
+            ->with('success', 'Student Berhasil Ditambahkan');
     }
+
 
     /**
      * Display the specified resource.
@@ -64,8 +81,8 @@ class StudentController extends Controller
      */
     public function show($Nim)
     {
-        $Student = Student::find($Nim);
-        return view('student.detail', compact('Student'));
+        $Student = Student::with('class')->where('nim',$nim)->first();
+        return view('student.detail', ['Student'=>$student]);
     }
 
     /**
@@ -76,8 +93,11 @@ class StudentController extends Controller
      */
     public function edit($Nim)
     {
-        $Student = DB::table('student')->where('nim', $Nim)->first();;
-        return view('student.edit', compact('Student'));
+        $Student = student::with('class')->where('nim',$nim)->first();
+        $class = ClassModel::all();
+        return view('student.edit', compact('Student','class'));
+
+        
     }
 
     /**
@@ -88,18 +108,34 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $Nim)
-    {
-        $request->validate([
-            'Nim' => 'required',
-            'Name' => 'required',
-            'Class' => 'required',
-            'Major' => 'required',
-            'Address' => 'required',
-            'DateOfBirth' => 'required',
-            ]);
+    
+    $request->validate([
+        'Nim' => 'required',
+        'Name' => 'required',
+        'class' => 'required',
+        'Major' => 'required',
+        'Address' => 'required',
+        'DateOfBirth' => 'required',
+    ]);
 
-            Student::find($Nim)->update($request->all());
-    }
+    $student = new Student;
+    $student->nim = $request->get('Nim');
+    $student->name = $request->get('Name');
+    $student->major = $request->get('Major');
+    $student->Address = $request->get('Address');
+    $student->DateOfBirth = $request->get('DateOfBirth');
+
+
+    $class = new ClassModel;
+    $class->id = $request->get('class');
+
+    $student->class()->associate($class);
+    $student->save();
+
+
+    return redirect()->route('student.index')
+        ->with('success', 'Student Berhasil Ditambahkan');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -111,6 +147,23 @@ class StudentController extends Controller
     {
         Student::find($Nim)->delete();
         return redirect()->route('student.index')
-            -> with('success', 'Student Successfully Deleted');
+            ->with('success', 'Student Successfully Deleted');
     }
 };
+public function search(Request $request) {
+
+    $student = Student::when($request->keyword, function ($query) use ($request){
+    
+    $query->where( 'name', 'like', "%{$request->keyword}%")
+    
+            ->orWhere('nim', 'like', "%{$request->keyword}%") 
+            
+            ->orWhere('class', 'like', "%{$request->keyword}%")
+    
+             ->orWhere('major', 'like', "%{$request->keyword}%");
+                })->paginate(5);
+    
+    $student->appends($request->only('keyword')); 
+    return view('student.index', compact( 'student'));
+}
+}

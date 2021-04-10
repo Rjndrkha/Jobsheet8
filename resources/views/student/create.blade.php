@@ -33,31 +33,31 @@
 
                     <div class="form-group">
                         <label for="Nim">Nim</label>
-                        <input type="text" name="Nim" class="form-control" id="Nim" aria-describedby="Nim" >
+                        <input type="text" name="Nim" class="form-control" id="Nim" aria-describedby="Nim">
                     </div>
                     <div class="form-group">
                         <label for="Name">Name</label>
-                        <input type="Name" name="Name" class="form-control" id="Name" ariadescribedby="Name" >
+                        <input type="Name" name="Name" class="form-control" id="Name" ariadescribedby="Name">
                     </div>
                     <div class="form-group">
-                    <label for="class">Class</label>
-                            <select name="class" class="form-control">
-                                @foreach($class as $kls)
-                    <option value="{{$kls->id}}">{{$kls->class_name}}</option>
-                    @endforeach
-                            </select>
-                </div>
+                        <label for="class">Class</label>
+                        <select name="class" class="form-control">
+                            @foreach($class as $kls)
+                            <option value="{{$kls->id}}">{{$kls->class_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="Major">Major</label>
-                        <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major" >
+                        <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major">
                     </div>
                     <div class="form-group">
                         <label for="DateOfBirth">Birth Date</label>
-                        <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" ariadescribedby="DateOfBirth" >
+                        <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" ariadescribedby="DateOfBirth">
                     </div>
                     <div class="form-group">
                         <label for="Address">Adrress</label>
-                        <input type="Address" name="Address" class="form-control" id="Address" ariadescribedby="Address" >
+                        <input type="Address" name="Address" class="form-control" id="Address" ariadescribedby="Address">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -67,22 +67,3 @@
 </div>
 
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
