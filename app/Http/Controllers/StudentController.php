@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\ClassModel;
 
 class StudentController extends Controller
 {
@@ -15,10 +16,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = $student = DB::table('student')->get();
-        $student = Student::orderBy('Nim', 'desc')->paginate(3);
-        return view('student.index', compact('student'))
-        ->with('i', (request()->input('page', 1) -1) * 3);
+        $student = Student::with('class')->get();
+        $paginate = Student::orderBy('id_student','asc')->paginate(3);
+        return view('student.index',['student'=>$student,'paginate'=>$paginate]);
     }
 
     /**
