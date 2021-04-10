@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label for="DateOfBirth">Birth Date</label>
-                        <input type="DateOfBirth" name="DateOfBirth" class="form-control" id="DateOfBirth" ariadescribedby="DateOfBirth" >
+                        <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" ariadescribedby="DateOfBirth" >
                     </div>
                     <div class="form-group">
                         <label for="Address">Adrress</label>

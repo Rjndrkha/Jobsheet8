@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="DateOfBirth">Birth Date</label>
-                                <input type="DateOfBirth" name="DateOfBirth" class="form-control" id="DateOfBirth" value="{{ $Student->DateOfBirth }}" aria-describedby="DateOfBirth" >
+                                <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" value="{{ $Student->DateOfBirth }}" aria-describedby="DateOfBirth" >
                             </div>
                             <div class="form-group">
                                 <label for="Address">Address</label>
