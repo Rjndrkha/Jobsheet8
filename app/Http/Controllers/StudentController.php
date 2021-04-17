@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Facades\DB;
 use App\Models\ClassModel;
+use App\Models\CourseModel;
+use App\Models\CourseStudent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection\paginate;
+use Illuminate\Support\Collection\collapse;
+use DB;
+
 
 class StudentController extends Controller
 {
@@ -15,11 +19,23 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $student = Student::with('class')->get();
-        $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
-        return view('student.index', ['student' => $student, 'paginate' => $paginate]);
+
+        $search = request()->query('search');
+        if($search){
+        $student = Student::with('class')
+                ->where('name','like',"%".$search."%")
+                ->orderBy('id_student', 'asc')
+                ->paginate();
+        }
+        else{
+        $student = Student::with('class')
+                ->orderBy('id_student', 'asc')
+                ->paginate(3);
+        }
+        return view('student.index', ['student' => $student]);
+
     }
 
     /**
@@ -49,21 +65,27 @@ class StudentController extends Controller
             'Name' => 'required',
             'class' => 'required',
             'Major' => 'required',
-            'Address' => 'required',
-            'DateOfBirth' => 'required',
+            'Photo' => 'required',
+            
         ]);
 
         $student = new Student;
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
-        $student->Address = $request->get('Address');
-        $student->DateOfBirth = $request->get('DateOfBirth');
-
+        
+        $student = new Student2;
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images', 'public');
+        }
+        Student2::create([
+            
+            'photo' => $image_name,
+        ]);
 
         $class = new ClassModel;
         $class->id = $request->get('class');
-
+        
         $student->class()->associate($class);
         $student->save();
 
@@ -113,16 +135,21 @@ class StudentController extends Controller
             'Name' => 'required',
             'class' => 'required',
             'Major' => 'required',
-            'Address' => 'required',
-            'DateOfBirth' => 'required',
+            'image' => 'required',
+            
         ]);
 
         $student = new Student;
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
-        $student->Address = $request->get('Address');
-        $student->DateOfBirth = $request->get('DateOfBirth');
+        
+        $image_name = new Student;
+        if ($student->photo && file_exists(storage_path('app/public/' . $student->photo))) {
+            Storage::delete('public/' . $student->photo);
+        }
+        $image_name = $request->file('image')->store('images', 'public');
+        $student->photo = $image_name;
 
 
         $class = new ClassModel;

@@ -9,15 +9,14 @@
     <div class="row justify-content-center align-items-center">
         <div style="width: 80rem;">
             <center>
-
-                <h1>KARTU HASIL STUDI (KHS)</h1>
+                <h1>KHS</h1>
             </center>
             <div>
                 <ul class="list-group list-group-flush">
-               
-                    <p><b>Nim: </b>{{$Student->nim}}</p>
-                    <p><b>Name: </b>{{$Student->name}}</p>
-                    <p><b>Class: </b>{{$Student->class->class_name}}</p>
+                @foreach ($student as $mhs)
+                    <p><b>Nim: </b>{{$mhs->nim}}</p>
+                    <p><b>Name: </b>{{$mhs->name}}</p>
+                    <p><b>Class: </b>{{$mhs->class->class_name}}</p>
                 </ul>
             </div> 
             
@@ -37,9 +36,6 @@
                     <td>{{ $course ->pivot->score }}</td>
                 </tr>
                 @endforeach
-              
-               
-           
 
 
             </table>

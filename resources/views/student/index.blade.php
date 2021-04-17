@@ -26,8 +26,8 @@
         <th>Name</th>
         <th>Class</th>
         <th>Major</th>
-        <th>Birth Date</th>
-        <th>Address</th>
+        <th>Photo</th>
+
         <th width="280px">Action</th>
     </tr>
 
@@ -38,8 +38,8 @@
         <td>{{ $mhs ->name }}</td>
         <td>{{ $mhs ->class->class_name }}</td>
         <td>{{ $mhs ->major }}</td>
-        <td>{{ $mhs ->DateOfBirth }}</td>
-        <td>{{ $mhs ->Address }}</td>
+        <td><img width="150px" src="{{asset('storage/'.$mhs->photo)}}"></td>
+
         <td>
             <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('student.show',$mhs->nim) }}">Show</a>
@@ -57,7 +57,9 @@
     @endforeach
 
 </table>
+<div class="d-flex mt-3">
+    {{ $student->links('pagination::bootstrap-4') }}
+</div>
 
 
-
-    @endsection
+@endsection

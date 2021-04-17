@@ -53,13 +53,11 @@
                         <label for="Major">Major</label>
                         <input type="Major" name="Major" class="form-control" id="Major" value="{{ $Student->major }}" aria-describedby="Major">
                     </div>
+
                     <div class="form-group">
-                        <label for="DateOfBirth">Birth Date</label>
-                        <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" value="{{ $Student->DateOfBirth }}" aria-describedby="DateOfBirth">
-                    </div>
-                    <div class="form-group">
-                        <label for="Address">Address</label>
-                        <input type="Address" name="Address" class="form-control" id="Address" value="{{ $Student->Address }}" aria-describedby="Address">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" required="required" name="image" value="{{$Student->photo}}"></br>
+                        <img width="150px" src="{{asset('storage/'.$Student->photo)}}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

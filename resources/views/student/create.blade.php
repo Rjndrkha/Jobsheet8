@@ -51,14 +51,10 @@
                         <label for="Major">Major</label>
                         <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major">
                     </div>
-                    <div class="form-group">
-                        <label for="DateOfBirth">Birth Date</label>
-                        <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" ariadescribedby="DateOfBirth">
-                    </div>
-                    <div class="form-group">
-                        <label for="Address">Adrress</label>
-                        <input type="Address" name="Address" class="form-control" id="Address" ariadescribedby="Address">
-                    </div>
+
+                    <label for="image">Image: </label>
+                    <input type="file" class="form-control" required="required" name="image"></br>
+                    
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
