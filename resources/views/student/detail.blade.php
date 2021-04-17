@@ -13,33 +13,33 @@
                 <h1>KARTU HASIL STUDI (KHS)</h1>
             </center>
             <div>
+                <div class="row">
+                    <div style="margin:0px 0px 0px 70px;">
+                        <a class="btn btn-success" href="#">Print PDF</a>
+                    </div>
+                </div>
+                <br>
                 <ul class="list-group list-group-flush">
-               
+
                     <p><b>Nim: </b>{{$Student->nim}}</p>
                     <p><b>Name: </b>{{$Student->name}}</p>
                     <p><b>Class: </b>{{$Student->class->class_name}}</p>
                 </ul>
-            </div> 
-            
+            </div>
+
             <table class="table table-bordered">
                 <tr>
                     <th>Course Name</th>
-                    <th>Credit</th>
+                    <th>SKS</th>
                     <th>Semester</th>
                     <th>Score</th>
                 </tr>
-                @foreach ($Student->course as $course)
-                <tr>
 
-                    <td>{{ $course ->course_name }}</td>
-                    <td>{{ $course ->sks}}</td>
-                    <td>{{ $course ->semester}}</td>
-                    <td>{{ $course ->pivot->score }}</td>
-                </tr>
-                @endforeach
-              
-               
-           
+                
+
+
+
+
 
 
             </table>
